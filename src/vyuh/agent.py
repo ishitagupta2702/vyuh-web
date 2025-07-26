@@ -1,23 +1,21 @@
 import os
 import warnings
+from langchain.chat_models import ChatLiteLLM
+from langchain.schema.messages import HumanMessage
 
-import litellm
-
-# from crewai_tools import MCPServerAdapter
-from wmtllmgateway.llm import LLM
-
-from identityCrew.crew import identityCrew
+from vyuh.crew import identityCrew
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-serverparams = {
-    "url": os.getenv("MCP_SERVER_URL", "http://localhost:8000/mcp/"),
-    "transport": os.getenv("MCP_TRANSPORT", "streamable-http"),
-}
+# Initialize ChatLiteLLM
+llm = ChatLiteLLM(
+    model_name="gpt-3.5-turbo",
+    temperature=0.7,
+    max_tokens=1000,
+)
 
-litellm.custom_provider_map = [
-    {"provider": "walmart_llm_gateway", "custom_handler": LLM()}
-]
+# Set environment variables for API key
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY", "")
 
 
 class CrewAgent:
@@ -27,13 +25,16 @@ class CrewAgent:
         self.crew = identityCrew().crew()
 
     async def invoke(self, parts) -> str:
-        """Kickoff CrewAI and return the response."""
+        """Process input with ChatLiteLLM and return the response."""
 
         try:
-            # mcp_server = MCPServerAdapter(serverparams)
-            # self.crew.agents[0].tools.extend(mcp_server.tools)
-            response = self.crew.kickoff(inputs=parts)
+            # Convert parts to a message
+            messages = [HumanMessage(content=parts.get("topic", ""))]
+            
+            # Get response from LLM
+            response = llm.invoke(messages)
+            
+            # Return the response content
+            return response.content
         except Exception as e:
-            raise Exception(f"An error occurred while running the crew: {e}")
-
-        return response.raw
+            raise Exception(f"An error occurred while processing with LLM: {e}")
