@@ -2,7 +2,7 @@ setup:
   releaseRefs: ["main"]
 
 owner:
-  group: International-CustomerAccounts
+  group: 
 
 alerts:
   slackChannel:
@@ -93,7 +93,7 @@ deploy:
         akeyless: true
         config:
           akeyless:
-            path: /Prod/WCNP/homeoffice/International-CustomerAccounts
+            path: 
         files:
           - destination: x-api-key.txt
             content: identity-crew/{{$.kittExec.currentStage.name}}/x-api-key
@@ -129,8 +129,8 @@ deploy:
           env:
             ENV: stage
             PORT: 8080
-            MODEL: walmart_llm_gateway/llama-3-2-90b-vision-instruct
-            BASE_URL: https://wmtllmgateway.stage.walmart.com/wmtllmgateway
+            MODEL: 
+            BASE_URL: 
             appName: IDENTITY_CREW
             WM_APP_VERSION: "{{$.kitt.build.version}}"
             TRACE_CONSOLE_EXPORTER: "false"
