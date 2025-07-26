@@ -1,0 +1,33 @@
+[project]
+name = "identityCrew"
+version = "0.0.1"
+description = "This a new CrewAI Project created by DX Starter Kit"
+authors = [{ name = "Ishita Gupta" , email= "Ishita.Gupta0@walmart.com"}]
+dependencies = [
+    "crewai-tools[mcp]",
+    "click",
+    "a2a-sdk",
+    "walmart-llmgateway",
+    "walmart-gtp-observability",
+    "openinference-instrumentation-crewai",
+    "opentelemetry-instrumentation-starlette",
+]
+
+[project.scripts]
+identityCrew = "identityCrew:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[[tool.uv.index]]
+name = "llm_gateway"
+url = "https://pypi.ci.artifacts.walmart.com/artifactory/api/pypi/intl-architecture-developer-tools-pypi/simple/"
+
+[[tool.uv.index]]
+name = "walmart-gtp-observability"
+url = "https://pypi.ci.artifacts.walmart.com/artifactory/api/pypi/mlplatforms-pypi/simple/"
+
+[tool.uv.sources]
+walmart-llmgateway = { index = "llm_gateway" }
+walmart-gtp-observability = { index = "walmart-gtp-observability" }
