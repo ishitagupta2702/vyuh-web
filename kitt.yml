@@ -6,11 +6,11 @@ owner:
 
 alerts:
   slackChannel:
-    - identity-crew
+    - vyuh
 
 notify:
   slack:
-    channelName: identity-crew
+    channelName: vyuh
 
 build:
   looper:
@@ -27,7 +27,7 @@ deploy:
   releaseType:
     strategy: normal
     rollbackOnError: true
-  namespace: identity-crew
+  namespace: vyuh
   helm:
     values:
       global:
@@ -57,9 +57,9 @@ deploy:
           maxUnavailable: 1
       metadata:
         labels:
-          wm.app: IDENTITY_CREW
+          wm.app: vyuh
           wm.env: stage
-          ccm.serviceId: IDENTITY_CREW
+          ccm.serviceId: vyuh
           ccm.serviceConfigVersion: "1.0"
           wm.tlsmode: DISABLE
       startupProbe:
@@ -131,11 +131,11 @@ deploy:
             PORT: 8080
             MODEL: 
             BASE_URL: 
-            appName: IDENTITY_CREW
+            appName: vyuh
             WM_APP_VERSION: "{{$.kitt.build.version}}"
             TRACE_CONSOLE_EXPORTER: "false"
             OTEL_EXPORTER_OTLP_TRACES_INSECURE: "true"
-            SRE_APP_NAME: IDENTITY_CREW
+            SRE_APP_NAME: vyuh
             environment: stage
             profile: '{{$.kittExec.currentCluster.profile}}'
             appVersion: '{{cookiecutter.version}}'
