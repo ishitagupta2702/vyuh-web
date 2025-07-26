@@ -6,9 +6,7 @@ authors = [{ name = "Ishita Gupta" , email= "ishitagupta2702@gmail.com"}]
 dependencies = [
     "crewai-tools[mcp]",
     "click",
-    "langchain",
-    "llmlite",
-    "openinference-instrumentation-crewai",
+    "langchain>=0.1.0",
     "opentelemetry-instrumentation-starlette",
 ]
 
