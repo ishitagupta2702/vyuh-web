@@ -1,7 +1,6 @@
 from crewai import Agent, Crew, Process, Task
-from crewai_tools import ScrapeWebsiteTool, SerperDevTool
 from crewai.project import CrewBase, agent, crew, task
-from langchain.chat_models import ChatLiteLLM
+from langchain_community.chat_models import ChatLiteLLM
 import os
 
 from dotenv import load_dotenv
