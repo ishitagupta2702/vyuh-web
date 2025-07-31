@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import AgentRunner from './components/AgentRunner';
+import CrewBuilder from './components/CrewBuilder.js';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <p>AI Agent System MVP</p>
       </header>
       <main>
+        <CrewBuilder />
         <AgentRunner />
       </main>
     </div>
