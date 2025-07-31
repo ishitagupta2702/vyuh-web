@@ -17,6 +17,9 @@ load_dotenv(project_root / ".env")
 # Import the publishCrew class
 from vyuh.crew import publishCrew
 
+# Import routes
+from routes.agents import router as agents_router
+
 app = FastAPI(
     title="Vyuh API",
     description="AI Agent System API using CrewAI",
@@ -31,6 +34,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include routers
+app.include_router(agents_router)
 
 class AgentRequest(BaseModel):
     topic: str = "The future of content creation"
