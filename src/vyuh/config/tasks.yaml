@@ -11,3 +11,4 @@ blog_task:
     Write a 100-word blog post summary about {topic} using the facts from the research.
   expected_output: >
     A blog post summary
+  agent: writer
