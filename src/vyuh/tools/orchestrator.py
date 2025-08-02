@@ -3,11 +3,11 @@ from typing import List, Dict, Any
 from crewai import Agent, Task, Crew
 from langchain_community.chat_models import ChatLiteLLM
 
-from src.vyuh.tools.graph_utils import list_to_graph
-from src.vyuh.tools.loaders import load_agents, load_tasks
+from .graph_utils import list_to_graph
+from .loaders import load_agents, load_tasks
 
 
-def launch_crew_from_linear_list(crew: List[str], topic: str) -> str:
+def launch_crew_from_linear_list(crew: List[str], topic: str, session_id: str = None) -> str:
     """
     Launch a CrewAI workflow from a linear list of agent IDs.
     
@@ -24,9 +24,10 @@ def launch_crew_from_linear_list(crew: List[str], topic: str) -> str:
     """
     print(f"[ORCHESTRATOR] Starting crew launch: crew={crew}, topic={topic}")
     
-    # Generate session ID
-    session_id = str(uuid.uuid4())
-    print(f"[ORCHESTRATOR] Generated session_id: {session_id}")
+    # Generate session ID if not provided
+    if session_id is None:
+        session_id = str(uuid.uuid4())
+    print(f"[ORCHESTRATOR] Using session_id: {session_id}")
     
     # Step 1: Convert list to graph
     print("[ORCHESTRATOR] Converting list to graph...")
@@ -108,7 +109,7 @@ def launch_crew_from_linear_list(crew: List[str], topic: str) -> str:
     try:
         result = crew_instance.kickoff(inputs={"topic": topic})
         print(f"[ORCHESTRATOR] Session {session_id}: Crew execution completed successfully")
-        print(f"[ORCHESTRATOR] Result: {result}")
+        print(f"[ORCHESTRATOR] Session {session_id}: Result: {result}")
         return session_id
     except Exception as e:
         print(f"[ORCHESTRATOR] Session {session_id}: Crew execution failed - {str(e)}")

@@ -19,6 +19,7 @@ from vyuh.crew import publishCrew
 
 # Import routes
 from routes.agents import router as agents_router
+from routes.crew_builder import router as crew_builder_router
 
 app = FastAPI(
     title="Vyuh API",
@@ -37,6 +38,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(agents_router)
+app.include_router(crew_builder_router)
 
 class AgentRequest(BaseModel):
     topic: str = "The future of content creation"
