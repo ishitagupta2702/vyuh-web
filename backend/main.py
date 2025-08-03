@@ -14,9 +14,6 @@ sys.path.insert(0, str(src_path))
 # Load environment variables from root .env file
 load_dotenv(project_root / ".env")
 
-# Import the publishCrew class
-from vyuh.crew import publishCrew
-
 # Import routes
 from routes.agents import router as agents_router
 from routes.crew_builder import router as crew_builder_router
@@ -40,80 +37,13 @@ app.add_middleware(
 app.include_router(agents_router)
 app.include_router(crew_builder_router)
 
-class AgentRequest(BaseModel):
-    topic: str = "The future of content creation"
 
-class AgentResponse(BaseModel):
-    result: str
-    topic: str
-    status: str = "success"
 
 @app.get("/")
 async def root():
     return {"message": "Vyuh API is running"}
 
-@app.get("/run-agent")
-async def run_agent_get():
-    """
-    GET endpoint for browser testing - uses default topic
-    """
-    try:
-        # Check if OpenAI API key is available
-        openai_api_key = os.getenv("OPENAI_API_KEY")
-        if not openai_api_key:
-            raise HTTPException(
-                status_code=500,
-                detail="OpenAI API key not found in environment variables"
-            )
-        
-        # Use default topic for GET requests
-        default_topic = "The future of content creation"
-        
-        # Instantiate and run the crew
-        crew_instance = publishCrew()
-        result = crew_instance.crew().kickoff(inputs={"topic": default_topic})
-        
-        return AgentResponse(
-            result=str(result),
-            topic=default_topic,
-            status="success"
-        )
-    
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error running agent: {str(e)}"
-        )
 
-@app.post("/run-agent", response_model=AgentResponse)
-async def run_agent(request: AgentRequest):
-    """
-    Run the publishCrew agent with the specified topic
-    """
-    try:
-        # Check if OpenAI API key is available
-        openai_api_key = os.getenv("OPENAI_API_KEY")
-        if not openai_api_key:
-            raise HTTPException(
-                status_code=500,
-                detail="OpenAI API key not found in environment variables"
-            )
-        
-        # Instantiate and run the crew
-        crew_instance = publishCrew()
-        result = crew_instance.crew().kickoff(inputs={"topic": request.topic})
-        
-        return AgentResponse(
-            result=str(result),
-            topic=request.topic,
-            status="success"
-        )
-    
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error running agent: {str(e)}"
-        )
 
 @app.get("/health")
 async def health_check():
