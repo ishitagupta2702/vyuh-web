@@ -7,11 +7,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Add the src directory to Python path to import vyuh modules
-project_root = Path(__file__).parent.parent
+project_root = Path(__file__).parent
 src_path = project_root / "src"
 sys.path.insert(0, str(src_path))
 
-# Load environment variables from root .env file
+# Load environment variables from backend .env file
 load_dotenv(project_root / ".env")
 
 # Import routes

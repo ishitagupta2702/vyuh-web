@@ -15,8 +15,8 @@ def load_agents() -> Dict[str, Any]:
         FileNotFoundError: If the agents.yaml file doesn't exist
     """
     # Get the project root and construct path to agents.yaml
-    project_root = Path(__file__).parent.parent.parent.parent
-    agents_file = project_root / "src" / "vyuh" / "config" / "agents.yaml"
+    project_root = Path(__file__).parent.parent.parent
+    agents_file = project_root / "vyuh" / "config" / "agents.yaml"
     
     if not agents_file.exists():
         raise FileNotFoundError(f"Agents configuration file not found at {agents_file}")
@@ -51,8 +51,8 @@ def load_tasks() -> Dict[str, Any]:
         FileNotFoundError: If the tasks.yaml file doesn't exist
     """
     # Get the project root and construct path to tasks.yaml
-    project_root = Path(__file__).parent.parent.parent.parent
-    tasks_file = project_root / "src" / "vyuh" / "config" / "tasks.yaml"
+    project_root = Path(__file__).parent.parent.parent
+    tasks_file = project_root / "vyuh" / "config" / "tasks.yaml"
     
     if not tasks_file.exists():
         raise FileNotFoundError(f"Tasks configuration file not found at {tasks_file}")
