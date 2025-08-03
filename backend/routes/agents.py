@@ -12,7 +12,7 @@ def load_agents_config() -> Dict[str, Any]:
     """
     try:
         # Get the project root and construct path to agents.yaml
-        project_root = Path(__file__).parent.parent.parent
+        project_root = Path(__file__).parent.parent
         agents_file = project_root / "src" / "vyuh" / "config" / "agents.yaml"
         
         if not agents_file.exists():
