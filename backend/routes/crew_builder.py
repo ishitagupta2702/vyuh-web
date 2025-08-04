@@ -24,7 +24,6 @@ class CrewLaunchRequest(BaseModel):
 class CrewLaunchResponse(BaseModel):
     session_id: str
     status: str = "completed"
-    result: str = ""
     data: Optional[str] = None  # The actual crew execution result
     topic: Optional[str] = None  # The topic that was processed
     crew: Optional[List[str]] = None  # The crew that was used
@@ -86,7 +85,6 @@ async def launch_crew(request: CrewLaunchRequest):
             return CrewLaunchResponse(
                 session_id=crew_result["session_id"],
                 status="completed",
-                result=crew_result["result"],
                 data=crew_result["result"],  # The actual crew execution result
                 topic=crew_result["topic"],
                 crew=crew_result["crew"]
