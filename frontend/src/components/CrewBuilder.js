@@ -12,40 +12,13 @@ const CrewBuilder = () => {
   const [error, setError] = useState(null);
   const [sessionId, setSessionId] = useState(null);
   const [result, setResult] = useState(null);
-  const [pollingResult, setPollingResult] = useState(false);
+  const [launchResult, setLaunchResult] = useState(null);
 
   useEffect(() => {
     fetchAgents();
   }, []);
 
-  // Poll for results when we have a sessionId
-  useEffect(() => {
-    if (!sessionId || !pollingResult) return;
-
-    const pollInterval = setInterval(async () => {
-      try {
-        const response = await fetch(`/api/result/${sessionId}`);
-        
-        if (response.ok) {
-          const data = await response.json();
-          setResult(data.content);
-          setPollingResult(false);
-          clearInterval(pollInterval);
-        } else if (response.status === 404) {
-          // Result not ready yet, continue polling
-          console.log('Result not ready yet, continuing to poll...');
-        } else {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      } catch (err) {
-        console.error('Error polling for result:', err);
-        setPollingResult(false);
-        clearInterval(pollInterval);
-      }
-    }, 2000); // Poll every 2 seconds
-
-    return () => clearInterval(pollInterval);
-  }, [sessionId, pollingResult]);
+  // No longer need polling since we get results directly from launch API
 
   const fetchAgents = async () => {
     try {
@@ -110,8 +83,8 @@ const CrewBuilder = () => {
 
       const data = await response.json();
       setSessionId(data.session_id);
-      setPollingResult(true);
-      setResult(null); // Clear any previous result
+      setLaunchResult(data); // Store the complete launch response
+      setResult(data.data); // Use the data field from the response
     } catch (err) {
       alert(`Error launching crew: ${err instanceof Error ? err.message : 'Failed to launch crew'}`);
     } finally {
@@ -128,7 +101,7 @@ const CrewBuilder = () => {
     setTopic("");
     setSessionId(null);
     setResult(null);
-    setPollingResult(false);
+    setLaunchResult(null);
   };
 
   if (loading) {
@@ -203,14 +176,20 @@ const CrewBuilder = () => {
       </div>
 
       {/* Result Display Section */}
-      {(pollingResult || result) && (
+      {(launchResult || result) && (
         <div className="result-section">
           <div className="result-header">
             <h3>Crew Execution Result</h3>
             {sessionId && <span className="session-id">Session: {sessionId}</span>}
+            {launchResult && (
+              <div className="result-info">
+                <span className="topic-info">Topic: {launchResult.topic}</span>
+                <span className="crew-info">Crew: {launchResult.crew?.join(', ')}</span>
+              </div>
+            )}
           </div>
           
-          {pollingResult && !result && (
+          {launchLoading && !result && (
             <div className="result-loading">
               <div className="loading-spinner"></div>
               <p>Executing crew... This may take a few moments.</p>
@@ -223,7 +202,7 @@ const CrewBuilder = () => {
                 className="result-textarea"
                 value={result}
                 readOnly
-                rows={10}
+                rows={15}
                 placeholder="Crew execution result will appear here..."
               />
               <div className="result-actions">
