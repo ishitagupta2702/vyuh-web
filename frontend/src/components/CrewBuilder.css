@@ -263,6 +263,23 @@
   font-family: monospace;
 }
 
+.result-info {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.topic-info,
+.crew-info {
+  background: #ecf0f1;
+  color: #2c3e50;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 .result-loading {
   text-align: center;
   padding: 2rem;
