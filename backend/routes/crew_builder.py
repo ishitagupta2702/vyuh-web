@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 import os
 import sys
 import time
@@ -25,6 +25,9 @@ class CrewLaunchResponse(BaseModel):
     session_id: str
     status: str = "completed"
     result: str = ""
+    data: Optional[str] = None  # The actual crew execution result
+    topic: Optional[str] = None  # The topic that was processed
+    crew: Optional[List[str]] = None  # The crew that was used
 
 @router.post("/api/launch", response_model=CrewLaunchResponse)
 async def launch_crew(request: CrewLaunchRequest):
@@ -35,7 +38,8 @@ async def launch_crew(request: CrewLaunchRequest):
         request: CrewLaunchRequest containing crew list and topic
         
     Returns:
-        CrewLaunchResponse with session ID and status
+        CrewLaunchResponse with session ID, status, and complete result data including
+        the actual crew execution output, topic, and crew information
     """
     print(f"[CREW_BUILDER] Launch request received: crew={request.crew}, topic={request.topic}")
     print("Received launch request:", request.crew, request.topic)
@@ -72,7 +76,7 @@ async def launch_crew(request: CrewLaunchRequest):
         
         # Run the crew execution directly (blocking)
         try:
-            result = launch_crew_from_linear_list(
+            crew_result = launch_crew_from_linear_list(
                 request.crew, 
                 request.topic, 
                 session_id
@@ -80,9 +84,12 @@ async def launch_crew(request: CrewLaunchRequest):
             print(f"[CREW_BUILDER] Crew execution completed for session_id: {session_id}")
             
             return CrewLaunchResponse(
-                session_id=session_id,
+                session_id=crew_result["session_id"],
                 status="completed",
-                result=str(result)
+                result=crew_result["result"],
+                data=crew_result["result"],  # The actual crew execution result
+                topic=crew_result["topic"],
+                crew=crew_result["crew"]
             )
             
         except Exception as e:

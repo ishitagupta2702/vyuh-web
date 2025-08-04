@@ -9,7 +9,7 @@ from .graph_utils import list_to_graph
 from .loaders import load_agents, load_tasks
 
 
-def launch_crew_from_linear_list(crew: List[str], topic: str, session_id: str = None) -> str:
+def launch_crew_from_linear_list(crew: List[str], topic: str, session_id: str = None) -> dict:
     """
     Launch a CrewAI workflow from a linear list of agent IDs.
     
@@ -18,7 +18,7 @@ def launch_crew_from_linear_list(crew: List[str], topic: str, session_id: str = 
         topic: The topic for the crew to work on
         
     Returns:
-        Session ID for the crew execution
+        Dictionary containing session_id and the actual crew execution result
         
     Raises:
         ValueError: If any agent is not found in configuration
@@ -113,25 +113,13 @@ def launch_crew_from_linear_list(crew: List[str], topic: str, session_id: str = 
         print(f"[ORCHESTRATOR] Session {session_id}: Crew execution completed successfully")
         print(f"[ORCHESTRATOR] Session {session_id}: Result: {result}")
         
-        # Step 8: Save result to file
-        print(f"[ORCHESTRATOR] Session {session_id}: Saving result to file...")
-        runs_dir = Path("runs")
-        runs_dir.mkdir(exist_ok=True)
-        
-        result_file = runs_dir / f"{session_id}.txt"
-        with open(result_file, "w", encoding="utf-8") as f:
-            f.write(f"Session ID: {session_id}\n")
-            f.write(f"Topic: {topic}\n")
-            f.write(f"Crew: {crew}\n")
-            f.write(f"Timestamp: {uuid.uuid4()}\n")
-            f.write("\n" + "="*50 + "\n")
-            f.write("FINAL OUTPUT:\n")
-            f.write("="*50 + "\n")
-            f.write(str(result))
-            f.write("\n")
-        
-        print(f"[ORCHESTRATOR] Session {session_id}: Result saved to {result_file}")
-        return session_id
+        # Return the actual result data directly
+        return {
+            "session_id": session_id,
+            "result": str(result),
+            "topic": topic,
+            "crew": crew
+        }
     except Exception as e:
         print(f"[ORCHESTRATOR] Session {session_id}: Crew execution failed - {str(e)}")
         raise e
@@ -144,8 +132,9 @@ if __name__ == "__main__":
         crew_list = ["researcher", "writer"]
         topic = "AI research"
         
-        session_id = launch_crew_from_linear_list(crew_list, topic)
-        print(f"✅ Crew launched successfully with session_id: {session_id}")
+        result = launch_crew_from_linear_list(crew_list, topic)
+        print(f"✅ Crew launched successfully with session_id: {result['session_id']}")
+        print(f"📝 Result: {result['result'][:100]}...")  # Show first 100 chars
         
     except Exception as e:
         print(f"❌ Error: {e}")
