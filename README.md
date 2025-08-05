@@ -89,24 +89,26 @@ This project is integrated with Firebase for:
 - **Database**: Firestore for storing crews and agents
 - **Storage**: Firebase Storage for file uploads
 - **Hosting**: Automatic deployment to Firebase Hosting
+- **Cloud Functions**: Backend API calls through Firebase Functions
 
 ### Firebase Setup
 
 1. **Create a Firebase Project**
    - Go to [Firebase Console](https://console.firebase.google.com/)
    - Create a new project or use existing project
-   - Enable Authentication, Firestore, and Storage
+   - Enable Authentication, Firestore, Storage, and Functions
 
 2. **Configure Environment Variables**
    - Copy `.env.example` to `.env`
    - Fill in your Firebase configuration values:
    ```env
    REACT_APP_FIREBASE_API_KEY=your_api_key_here
-   REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-   REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-   REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   REACT_APP_FIREBASE_AUTH_DOMAIN=vyuh-web.firebaseapp.com
+   REACT_APP_FIREBASE_PROJECT_ID=vyuh-web
+   REACT_APP_FIREBASE_STORAGE_BUCKET=vyuh-web.appspot.com
    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
    REACT_APP_FIREBASE_APP_ID=your_app_id
+   REACT_APP_BACKEND_URL=https://vyuh-backend-production.up.railway.app
    ```
 
 3. **Deploy to Firebase**
@@ -114,11 +116,11 @@ This project is integrated with Firebase for:
    # Build and deploy everything
    npm run deploy
    
-   # Deploy only hosting
+   # Deploy specific services
    npm run deploy:hosting
-   
-   # Deploy only Firestore rules
    npm run deploy:firestore
+   npm run deploy:storage
+   npm run deploy:functions
    ```
 
 ### Firebase Services Used
@@ -127,6 +129,7 @@ This project is integrated with Firebase for:
 - **Firestore**: NoSQL database for crews and agents
 - **Storage**: File storage for uploads
 - **Hosting**: Web hosting with automatic deployments
+- **Functions**: Backend API calls (can replace external backend)
 
 ### Security Rules
 
