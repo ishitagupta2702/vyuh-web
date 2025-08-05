@@ -14,16 +14,17 @@ const CrewBuilder = () => {
   const [result, setResult] = useState(null);
   const [launchResult, setLaunchResult] = useState(null);
 
+  // Get backend URL from environment or use default
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://vyuh-backend-production.up.railway.app';
+
   useEffect(() => {
     fetchAgents();
   }, []);
 
-  // No longer need polling since we get results directly from launch API
-
   const fetchAgents = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/agents');
+      const response = await fetch(`${BACKEND_URL}/api/agents`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -68,7 +69,7 @@ const CrewBuilder = () => {
         topic: topic.trim()
       };
       
-      const response = await fetch('/api/launch', {
+      const response = await fetch(`${BACKEND_URL}/api/launch`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
