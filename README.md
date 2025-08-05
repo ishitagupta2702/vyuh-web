@@ -81,3 +81,55 @@ This creates an optimized production build in the `build` folder.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Firebase Integration
+
+This project is integrated with Firebase for:
+- **Authentication**: Email/password and Google sign-in
+- **Database**: Firestore for storing crews and agents
+- **Storage**: Firebase Storage for file uploads
+- **Hosting**: Automatic deployment to Firebase Hosting
+
+### Firebase Setup
+
+1. **Create a Firebase Project**
+   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Create a new project or use existing project
+   - Enable Authentication, Firestore, and Storage
+
+2. **Configure Environment Variables**
+   - Copy `.env.example` to `.env`
+   - Fill in your Firebase configuration values:
+   ```env
+   REACT_APP_FIREBASE_API_KEY=your_api_key_here
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+   REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   REACT_APP_FIREBASE_APP_ID=your_app_id
+   ```
+
+3. **Deploy to Firebase**
+   ```bash
+   # Build and deploy everything
+   npm run deploy
+   
+   # Deploy only hosting
+   npm run deploy:hosting
+   
+   # Deploy only Firestore rules
+   npm run deploy:firestore
+   ```
+
+### Firebase Services Used
+
+- **Authentication**: Email/password and Google sign-in
+- **Firestore**: NoSQL database for crews and agents
+- **Storage**: File storage for uploads
+- **Hosting**: Web hosting with automatic deployments
+
+### Security Rules
+
+The project includes security rules for:
+- **Firestore**: Users can only access their own data
+- **Storage**: Users can only access their own files
