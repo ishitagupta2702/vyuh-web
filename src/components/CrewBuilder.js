@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import AgentCard from './AgentCard';
 import CrewCart from './CrewCart';
 import './CrewBuilder.css';
@@ -17,11 +17,7 @@ const CrewBuilder = () => {
   // Get backend URL from environment or use default
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://vyuh-backend-production.up.railway.app';
 
-  useEffect(() => {
-    fetchAgents();
-  }, []);
-
-  const fetchAgents = async () => {
+  const fetchAgents = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`${BACKEND_URL}/api/agents`);
@@ -39,7 +35,11 @@ const CrewBuilder = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [BACKEND_URL]);
+
+  useEffect(() => {
+    fetchAgents();
+  }, [fetchAgents]);
 
   const addToCrew = (agentId) => {
     if (!crew.includes(agentId)) {
