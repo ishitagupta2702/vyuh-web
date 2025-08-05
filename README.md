@@ -1,22 +1,19 @@
-# Vyuh - Collaborative AI Agent Framework
+# Vyuh Frontend
 
-Vyuh is a powerful framework for building intelligent, collaborative AI agents that work together to solve complex tasks. It leverages the crewai framework and LangChain's advanced language models to create sophisticated multi-agent systems.
+A React-based frontend application for the Vyuh collaborative AI agent framework. This repository contains the user interface for interacting with AI agents and managing crew configurations.
 
-## Key Features
+## Features
 
-- 🤖 Multi-agent collaboration using crewai framework
-- 🧠 Integration with LangChain and OpenAI's GPT models
-- 📝 YAML-based configuration for easy customization
-- 📚 Modular architecture for extensibility
-- 🛠️ Built-in tools for web scraping and search
-- 🔄 Dynamic task execution and agent coordination
-- 📈 Scalable architecture for growing agent systems
+- 🤖 Interactive agent management interface
+- 👥 Crew builder for creating AI agent teams
+- 🎨 Modern, responsive UI design
+- ⚡ Real-time agent status updates
+- �� Mobile-friendly design
 
-## Requirements
+## Prerequisites
 
-- Python 3.10 or higher
-- OpenAI API key
-- Required dependencies (automatically installed via pip)
+- Node.js 16 or higher
+- npm or yarn package manager
 
 ## Installation
 
@@ -24,107 +21,63 @@ Vyuh is a powerful framework for building intelligent, collaborative AI agents t
 
 ```bash
 git clone <repository-url>
-cd vyuh
+cd vyuh-frontend
 ```
 
-2. **Set Up Virtual Environment**
+2. **Install Dependencies**
 
 ```bash
-python3.10 -m venv .venv
-source .venv/bin/activate
-pip install -e .
+npm install
 ```
 
-3. **Configure Environment**
-
-Create a `.env` file in the root directory:
-
-```env
-OPENAI_API_KEY=your_openai_api_key
-```
-
-## Usage
-
-Run the application:
+3. **Start Development Server**
 
 ```bash
-python src/vyuh/crew.py
+npm start
 ```
 
-The application will automatically load agent configurations from `src/vyuh/config/agents.yaml` and task definitions from `src/vyuh/config/tasks.yaml`.
+The application will open in your browser at `http://localhost:3000`.
+
+## Available Scripts
+
+- `npm start` - Starts the development server
+- `npm build` - Builds the app for production
+- `npm test` - Runs the test suite
+- `npm eject` - Ejects from Create React App (one-way operation)
+
+## Project Structure
+
+```
+src/
+├── components/          # React components
+│   ├── AgentCard/      # Agent display components
+│   ├── CrewBuilder/    # Crew creation interface
+│   └── CrewCart/       # Crew management components
+├── App.js              # Main application component
+├── index.js            # Application entry point
+└── index.css           # Global styles
+```
 
 ## Configuration
 
-### Agents
+To connect to a backend API, update the API endpoints in your components. The application is designed to work with the Vyuh backend API.
 
-Agents are defined in `agents.yaml`. Each agent has:
+## Building for Production
 
-- A unique name
-- Role description
-- Goal statement
-- Backstory
-- Associated tools and capabilities
+```bash
+npm run build
+```
 
-### Tasks
-
-Tasks are defined in `tasks.yaml` and specify:
-
-- Task description
-- Expected output
-- Assigned agent
-- Input parameters
-- Execution constraints
-
-## Extending the System
-
-1. **Add New Agents**
-   - Define new agents in `agents.yaml`
-   - Create corresponding agent implementations in `crew.py`
-
-2. **Add New Tools**
-   - Implement tools in `src/vyuh/tools/`
-   - Register tools with agents in `crew.py`
-
-3. **Customize Behavior**
-   - Modify agent configurations in `agents.yaml`
-   - Adjust task definitions in `tasks.yaml`
-   - Update LLM parameters in `crew.py`
-
-## Best Practices
-
-1. Keep agent roles specific and focused
-2. Define clear task boundaries
-3. Maintain consistent agent configurations
-4. Regularly update dependencies
-5. Test new configurations before deployment
+This creates an optimized production build in the `build` folder.
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Connect to a MCP Server
-
-To connect a CrewAI agent to a MCP server:
-
-1. Set the `MCP_SERVER_URL` environment variable
-
-Provide a value for `MCP_SERVER_URL`. This value will override the server parameters used by the `MCPServerAdapter` class.
-
-2. Enable the MCP integration code
-
-In `src/identityCrew/agent.py`, locate the `invoke` method. Uncomment the section that creates an `MCPServerAdapter` instance and extends your agent’s toolset:
-
-```python
-# mcp_server = MCPServerAdapter(serverparams)
-# self.crew.agents[0].tools.extend(mcp_server.tools)
-```
-
-This will attach the MCP tools to your first CrewAI agent, enabling it to communicate with the MCP server you configured.

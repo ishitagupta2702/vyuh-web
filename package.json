@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "vyuh-frontend",
   "version": "0.1.0",
   "private": true,
 
@@ -38,7 +38,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://vyuh-backend-production.up.railway.app",
   "devDependencies": {
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
