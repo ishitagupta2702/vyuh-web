@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login, signup, signInWithGoogle } = useAuth();
+  const { login, signInWithGoogle } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
