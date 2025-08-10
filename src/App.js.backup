@@ -1,0 +1,27 @@
+import React, { useEffect } from 'react';
+import './App.css';
+import CrewBuilder from './components/CrewBuilder.js';
+import { auth, db } from './firebase';
+
+function App() {
+  useEffect(() => {
+    // Test Firebase connection
+    console.log('Firebase initialized successfully!');
+    console.log('Auth:', auth);
+    console.log('Firestore:', db);
+  }, []);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Vyuh Crew Builder</h1>
+        <p>Build and launch collaborative AI agent crews</p>
+      </header>
+      <main>
+        <CrewBuilder />
+      </main>
+    </div>
+  );
+}
+
+export default App;

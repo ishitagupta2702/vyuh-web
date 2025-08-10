@@ -1,0 +1,136 @@
+.card {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #e5e7eb;
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Variants */
+.card-default {
+  background: white;
+}
+
+.card-elevated {
+  background: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-elevated:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.card-outlined {
+  background: transparent;
+  border: 2px solid #e5e7eb;
+  box-shadow: none;
+}
+
+.card-outlined:hover {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+}
+
+.card-dark {
+  background: #1f2937;
+  color: white;
+  border-color: #374151;
+}
+
+.card-dark:hover {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+}
+
+/* Padding variants */
+.card-padding-none {
+  padding: 0;
+}
+
+.card-padding-small {
+  padding: 1rem;
+}
+
+.card-padding-default {
+  padding: 1.5rem;
+}
+
+.card-padding-large {
+  padding: 2rem;
+}
+
+/* Card header */
+.card-header {
+  padding: 1.5rem 1.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.card-dark .card-title {
+  color: white;
+}
+
+/* Card body */
+.card-body {
+  flex: 1;
+}
+
+/* Card footer */
+.card-footer {
+  padding: 0 1.5rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.card-dark .card-footer {
+  border-top-color: #374151;
+}
+
+/* Card loading state */
+.card-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1rem;
+  color: #6b7280;
+}
+
+.card-loading span {
+  font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .card-padding-default {
+    padding: 1rem;
+  }
+  
+  .card-padding-large {
+    padding: 1.5rem;
+  }
+  
+  .card-header {
+    padding: 1rem 1rem 0;
+  }
+  
+  .card-footer {
+    padding: 0 1rem 1rem;
+  }
+}

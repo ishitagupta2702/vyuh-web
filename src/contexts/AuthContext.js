@@ -1,11 +1,13 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut, 
   onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithPopup,
   GoogleAuthProvider,
-  signInWithPopup
+  updateProfile
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -19,8 +21,20 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+  // Sign up with email and password
+  async function signup(email, password, displayName = '') {
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Update profile with display name if provided
+      if (displayName) {
+        await updateProfile(result.user, { displayName });
+      }
+      
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
 
   function login(email, password) {
@@ -31,9 +45,15 @@ export function AuthProvider({ children }) {
     return signOut(auth);
   }
 
-  function signInWithGoogle() {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
+  // Sign in with Google
+  async function signInWithGoogle() {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
 
   useEffect(() => {
@@ -45,12 +65,29 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  // Reset password
+  function resetPassword(email) {
+    return sendPasswordResetEmail(auth, email);
+  }
+
+  // Update user profile
+  async function updateUserProfile(data) {
+    try {
+      await updateProfile(auth.currentUser, data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   const value = {
     currentUser,
     signup,
     login,
     logout,
-    signInWithGoogle
+    resetPassword,
+    signInWithGoogle,
+    updateUserProfile,
+    loading
   };
 
   return (
