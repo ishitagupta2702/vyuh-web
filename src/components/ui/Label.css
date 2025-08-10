@@ -1,0 +1,37 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  user-select: none;
+}
+
+.label:hover {
+  color: #1f2937;
+}
+
+.label-required {
+  color: #ef4444;
+  font-weight: 600;
+  margin-left: 0.125rem;
+}
+
+.label-disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.label-disabled:hover {
+  color: #9ca3af;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .label {
+    font-size: 0.8125rem;
+  }
+}

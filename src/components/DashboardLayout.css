@@ -1,0 +1,310 @@
+.dashboard-layout {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f2937 0%, #581c87 50%, #1e3a8a 100%);
+  display: flex;
+}
+
+.dashboard-layout .sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-layout .sidebar {
+  position: fixed;
+  inset-y: 0;
+  left: 0;
+  z-index: 50;
+  width: 16rem;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.dashboard-layout .sidebar.open {
+  transform: translateX(0);
+}
+
+.dashboard-layout .sidebar-content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.dashboard-layout .sidebar-header {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.dashboard-layout .sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dashboard-layout .brand-logo {
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.dashboard-layout .brand-text {
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dashboard-layout .sidebar-close {
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dashboard-layout .sidebar-close:hover {
+  color: white;
+  background-color: #374151;
+}
+
+.dashboard-layout .sidebar-nav {
+  flex: 1;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dashboard-layout .nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
+  transition: all 0.2s;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #d1d5db;
+  font-weight: 500;
+}
+
+.dashboard-layout .nav-item:hover {
+  background-color: rgba(55, 65, 81, 0.5);
+  color: white;
+  border-color: rgba(75, 85, 99, 0.3);
+}
+
+.dashboard-layout .nav-item.active {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+  color: #c084fc;
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.1);
+}
+
+.dashboard-layout .nav-item.active .nav-icon {
+  color: #c084fc;
+}
+
+.dashboard-layout .nav-item .nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #9ca3af;
+}
+
+.dashboard-layout .nav-item.active .nav-indicator {
+  margin-left: auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #c084fc;
+  border-radius: 50%;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.dashboard-layout .sidebar-profile {
+  border-top: 1px solid rgba(168, 85, 247, 0.2);
+  padding: 1rem;
+}
+
+.dashboard-layout .profile-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dashboard-layout .profile-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.dashboard-layout .profile-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.dashboard-layout .profile-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-layout .profile-email {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-layout .main-content {
+  flex: 1;
+  margin-left: 0;
+}
+
+.dashboard-layout .main-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.dashboard-layout .header-content {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.dashboard-layout .mobile-menu-btn {
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dashboard-layout .mobile-menu-btn:hover {
+  color: white;
+  background-color: #374151;
+}
+
+.dashboard-layout .page-title {
+  flex: 1;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+}
+
+.dashboard-layout .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-layout .logout-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #d1d5db;
+  background: none;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dashboard-layout .logout-btn:hover {
+  color: white;
+  background-color: #374151;
+}
+
+.dashboard-layout .page-content {
+  padding: 1rem;
+}
+
+.dashboard-layout .content-container {
+  background: rgba(31, 41, 55, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.1);
+  padding: 1.5rem;
+}
+
+/* Responsive design */
+@media (min-width: 1024px) {
+  .dashboard-layout .sidebar {
+    position: static;
+    transform: none;
+  }
+  
+  .dashboard-layout .main-content {
+    margin-left: 16rem;
+  }
+  
+  .dashboard-layout .mobile-menu-btn {
+    display: none;
+  }
+}
+
+/* Animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Dashboard content styling */
+.dashboard-content .welcome-section {
+  margin-bottom: 2rem;
+}
+
+.dashboard-content .welcome-section h1 {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-content .welcome-section p {
+  color: #d1d5db;
+  font-size: 1.125rem;
+}

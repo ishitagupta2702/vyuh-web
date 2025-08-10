@@ -1,0 +1,116 @@
+.toast {
+    font-family: inherit;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .toast-success {
+    background-color: var(--color-success-bg, #f0fdf4);
+    color: var(--color-success, #16a34a);
+    border: 1px solid var(--color-success-border, #bbf7d0);
+  }
+  
+  .toast-error {
+    background-color: var(--color-error-bg, #fef2f2);
+    color: var(--color-error, #dc2626);
+    border: 1px solid var(--color-error-border, #fecaca);
+  }
+  
+  .toast-warning {
+    background-color: var(--color-warning-bg, #fffbeb);
+    color: var(--color-warning, #d97706);
+    border: 1px solid var(--color-warning-border, #fed7aa);
+  }
+  
+  .toast-info {
+    background-color: var(--color-info-bg, #eff6ff);
+    color: var(--color-info, #2563eb);
+    border: 1px solid var(--color-info-border, #bfdbfe);
+  }
+  
+  .toast-loading {
+    background-color: var(--color-bg-secondary, #f9fafb);
+    color: var(--color-text-primary, #111827);
+    border: 1px solid var(--color-border, #d1d5db);
+  }
+  
+  .toast-icon {
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+  }
+  
+  .toast-message {
+    flex: 1;
+    margin-right: 0.5rem;
+  }
+  
+  .toast-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  
+  .toast-close:hover {
+    opacity: 1;
+  }
+  
+  .toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: currentColor;
+    opacity: 0.3;
+    animation: toast-progress 4s linear forwards;
+  }
+  
+  @keyframes toast-progress {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
+  
+  /* Custom toast variants */
+  .toast-compact {
+    padding: 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  .toast-large {
+    padding: 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .toast-with-actions {
+    padding-right: 0.5rem;
+  }
+  
+  .toast-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 0.5rem;
+  }
+  
+  .toast-action {
+    background: none;
+    border: 1px solid currentColor;
+    color: inherit;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .toast-action:hover {
+    background-color: currentColor;
+    color: white;
+  }

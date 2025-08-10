@@ -9,6 +9,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import Dashboard from "./components/Dashboard";
+import ComponentDemo from "./components/ui/ComponentDemo";
+import { ToastContainer } from "./components/ui";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/demo" element={<ComponentDemo />} />
             
             {/* Protected Routes */}
             <Route
@@ -36,6 +39,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Layout>
+        <ToastContainer />
       </AuthProvider>
     </Router>
   );
