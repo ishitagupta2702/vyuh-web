@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import './CrewBuilder.css';
 
 const CrewBuilder = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAuth();
   const [agents, setAgents] = useState({});
   const [crew, setCrew] = useState([]);
   const [topic, setTopic] = useState("");
