@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
@@ -8,7 +8,9 @@ import {
   Cog6ToothIcon,
   Bars3Icon,
   XMarkIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  UserGroupIcon,
+  CubeIcon
 } from '@heroicons/react/24/outline';
 import './DashboardLayout.css';
 
@@ -17,12 +19,26 @@ export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(location.pathname);
+
+  // Add dashboard-active class to body for full-screen styling
+  useEffect(() => {
+    document.body.classList.add('dashboard-active');
+    document.documentElement.classList.add('dashboard-active');
+    
+    return () => {
+      document.body.classList.remove('dashboard-active');
+      document.documentElement.classList.remove('dashboard-active');
+    };
+  }, []);
 
   const navigation = [
-    { name: 'Home', href: '/dashboard', icon: HomeIcon, current: location.pathname === '/dashboard' },
-    { name: 'Launch Crew', href: '/dashboard/launch', icon: RocketLaunchIcon, current: location.pathname === '/dashboard/launch' },
-    { name: 'History', href: '/dashboard/history', icon: ClockIcon, current: location.pathname === '/dashboard/history' },
-    { name: 'Settings', href: '/dashboard/settings', icon: Cog6ToothIcon, current: location.pathname === '/dashboard/settings' },
+    { name: 'Home', href: '/dashboard', tabId: 'home', icon: HomeIcon },
+    { name: 'Create Crew', href: '/dashboard/create', tabId: 'create-crew', icon: RocketLaunchIcon },
+    { name: 'Pre-built Crews', href: '/dashboard/prebuilt', tabId: 'prebuilt-crews', icon: CubeIcon },
+    { name: 'My Crews', href: '/dashboard/my-crews', tabId: 'my-crews', icon: UserGroupIcon },
+    { name: 'History', href: '/dashboard/history', tabId: 'history', icon: ClockIcon },
+    { name: 'Settings', href: '/dashboard/settings', tabId: 'settings', icon: Cog6ToothIcon },
   ];
 
   const handleLogout = async () => {
@@ -34,8 +50,9 @@ export default function DashboardLayout({ children }) {
     }
   };
 
-  const handleNavigation = (href) => {
+  const handleNavigation = (href, tabId) => {
     navigate(href);
+    setActiveTab(href); // Or use tabId if you prefer
     setSidebarOpen(false);
   };
 
@@ -79,12 +96,12 @@ export default function DashboardLayout({ children }) {
               return (
                 <button
                   key={item.name}
-                  onClick={() => handleNavigation(item.href)}
-                  className={`nav-item ${item.current ? 'active' : ''}`}
+                  onClick={() => handleNavigation(item.href, item.tabId)}
+                  className={`nav-item ${activeTab === item.href ? 'active' : ''}`}
                 >
                   <Icon className="nav-icon" />
                   <span>{item.name}</span>
-                  {item.current && (
+                  {activeTab === item.href && (
                     <div className="nav-indicator" />
                   )}
                 </button>
@@ -107,6 +124,12 @@ export default function DashboardLayout({ children }) {
                 </p>
               </div>
             </div>
+            <button
+              onClick={handleLogout}
+              className="logout-btn"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>
@@ -126,17 +149,11 @@ export default function DashboardLayout({ children }) {
 
             {/* Page title */}
             <div className="page-title">
-              {navigation.find(item => item.current)?.name || 'Dashboard'}
+              {navigation.find(item => activeTab === item.href)?.name || 'Dashboard'}
             </div>
 
             {/* Header actions */}
             <div className="header-actions">
-              <button
-                onClick={handleLogout}
-                className="logout-btn"
-              >
-                Logout
-              </button>
             </div>
           </div>
         </div>

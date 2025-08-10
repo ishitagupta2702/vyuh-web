@@ -1,3 +1,5 @@
+@import './components/ui/Notification.css';
+
 .App {
   text-align: center;
   min-height: 100vh;

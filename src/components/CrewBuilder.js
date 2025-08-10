@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import './CrewBuilder.css';
 
 const CrewBuilder = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAuth();
   const [agents, setAgents] = useState({});
   const [crew, setCrew] = useState([]);
   const [topic, setTopic] = useState("");
@@ -144,9 +144,6 @@ const CrewBuilder = () => {
             <span className="user-info">
               Welcome, {currentUser?.displayName || currentUser?.email || 'User'}!
             </span>
-            <button onClick={logout} className="logout-btn">
-              Logout
-            </button>
           </div>
         </div>
       </header>

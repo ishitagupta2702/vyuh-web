@@ -1,0 +1,288 @@
+.create-crew-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Project Idea Section */
+.project-idea-section {
+    margin-bottom: 2rem;
+}
+
+.project-idea-section h3 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.project-idea-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+.project-idea-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.project-idea-input::placeholder {
+    color: #a0aec0;
+}
+
+/* Filter Section */
+.filter-section {
+    margin-bottom: 2rem;
+}
+
+.filter-section h4 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 25px;
+    background: #ffffff;
+    color: #4a5568;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: #4299e1;
+    color: #4299e1;
+    background: #f7fafc;
+}
+
+.filter-btn.active {
+    background: #4299e1;
+    border-color: #4299e1;
+    color: #ffffff;
+}
+
+/* Agent Selection Section */
+.agent-selection-section {
+    margin-bottom: 2rem;
+}
+
+.agent-selection-section h4 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.agent-card {
+    padding: 1.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.agent-card:hover {
+    border-color: #4299e1;
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.15);
+    transform: translateY(-2px);
+}
+
+.agent-card h5 {
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.agent-card p {
+    color: #4a5568;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.agent-role {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #edf2f7;
+    color: #4a5568;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Selected Crew Section */
+.selected-crew-section {
+    margin-bottom: 2rem;
+}
+
+.selected-crew-section h4 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.no-agents-message {
+    color: #a0aec0;
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+    background: #f7fafc;
+    border-radius: 8px;
+    border: 2px dashed #e2e8f0;
+}
+
+.selected-agents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.selected-agent-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.agent-name {
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.remove-agent-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #fed7d7;
+    border-radius: 6px;
+    background: #fed7d7;
+    color: #c53030;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.remove-agent-btn:hover {
+    background: #feb2b2;
+    border-color: #feb2b2;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.create-crew-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    background: #4299e1;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.create-crew-btn:hover:not(:disabled) {
+    background: #3182ce;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+}
+
+.create-crew-btn:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.clear-all-btn {
+    padding: 1rem 2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #4a5568;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.clear-all-btn:hover {
+    border-color: #a0aec0;
+    background: #f7fafc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .create-crew-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .agents-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .create-crew-btn,
+    .clear-all-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
