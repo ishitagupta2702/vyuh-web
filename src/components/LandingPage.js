@@ -19,8 +19,6 @@ export default function LandingPage() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://vyuh-backend-production.up.railway.app';
-
   // Animate stats on scroll
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
