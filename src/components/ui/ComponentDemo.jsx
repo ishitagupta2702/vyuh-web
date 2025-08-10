@@ -8,11 +8,13 @@ import Label from './Label';
 import Modal from './Modal';
 import Spinner from './Spinner';
 import { showToast } from './Toast';
+import { useNotification } from '../../contexts/NotificationContext';
 import './ComponentDemo.css';
 
 const ComponentDemo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { addNotification } = useNotification();
   
   const form = useForm({
     defaultValues: {
@@ -231,6 +233,34 @@ const ComponentDemo = () => {
             </Button>
           </div>
         </Modal>
+      </section>
+
+      {/* Notification Section */}
+      <section className="demo-section">
+        <h2>Notification System</h2>
+        <div className="demo-grid">
+          <Button onClick={() => addNotification('This is an info notification!', 'info')}>
+            Info Notification
+          </Button>
+          <Button onClick={() => addNotification('This is a success notification!', 'success')}>
+            Success Notification
+          </Button>
+          <Button onClick={() => addNotification('This is a warning notification!', 'warning')}>
+            Warning Notification
+          </Button>
+          <Button onClick={() => addNotification('This is an error notification!', 'error')}>
+            Error Notification
+          </Button>
+        </div>
+        <div className="demo-grid">
+          <Button onClick={() => {
+            addNotification('Multiple notifications demo!', 'info');
+            setTimeout(() => addNotification('Second notification!', 'success'), 500);
+            setTimeout(() => addNotification('Third notification!', 'warning'), 1000);
+          }}>
+            Show Multiple Notifications
+          </Button>
+        </div>
       </section>
 
       {/* Toast Section */}

@@ -1,0 +1,49 @@
+.notification-test {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .notification-test h1 {
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .notification-test p {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .test-info {
+    margin-top: 3rem;
+    text-align: left;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  
+  .test-info h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 0.5rem;
+  }
+  
+  .test-info ul {
+    margin-left: 1.5rem;
+    color: #495057;
+  }
+  
+  .test-info li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .test-info p {
+    margin-top: 1rem;
+    color: #6c757d;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
