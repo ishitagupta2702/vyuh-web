@@ -16,6 +16,8 @@ import NotificationTest from "./components/NotificationTest";
 import { ToastContainer } from "./components/ui";
 
 function App() {
+  console.log('🎯 App component rendering...');
+  
   return (
     <Router>
       <AuthProvider>
@@ -34,6 +36,46 @@ function App() {
               {/* Protected Routes */}
               <Route
                 path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dashboard/create"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dashboard/prebuilt"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dashboard/my-crews"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dashboard/history"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dashboard/settings"
                 element={
                   <PrivateRoute>
                     <Dashboard />
