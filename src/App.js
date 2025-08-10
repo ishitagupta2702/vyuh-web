@@ -4,7 +4,7 @@ import "./App.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
-import Landing from "./components/Landing";
+import LandingPage from "./components/LandingPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
@@ -17,7 +17,7 @@ function App() {
         <Layout>
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<Landing />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
