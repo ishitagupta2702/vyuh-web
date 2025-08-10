@@ -144,9 +144,6 @@ const CrewBuilder = () => {
             <span className="user-info">
               Welcome, {currentUser?.displayName || currentUser?.email || 'User'}!
             </span>
-            <button onClick={logout} className="logout-btn">
-              Logout
-            </button>
           </div>
         </div>
       </header>
