@@ -13,6 +13,24 @@
   margin-bottom: 2rem;
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-left {
+  text-align: left;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .App-header h1 {
   margin: 0;
   font-size: 3rem;
@@ -102,22 +120,25 @@ main {
 }
 
 .user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  color: white;
+  font-weight: 500;
+  opacity: 0.9;
 }
 
 .logout-btn {
-  background: #dc3545;
+  background: rgba(220, 53, 69, 0.8);
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .logout-btn:hover {
-  background: #c82333;
+  background: rgba(200, 35, 51, 0.9);
+  transform: translateY(-2px);
 }
