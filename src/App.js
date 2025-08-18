@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -15,8 +15,33 @@ import NotificationDemo from "./components/NotificationDemo";
 import NotificationTest from "./components/NotificationTest";
 import { ToastContainer } from "./components/ui";
 
+
 function App() {
   console.log('🎯 App component rendering...');
+
+  useEffect(() => {
+    // Create script element
+    const script = document.createElement('script');
+    script.src = 'https://ai-chat-agent-98aeb.web.app/widget.js';
+    script.dataset.companyName ='kalco';
+    script.setAttribute('data-theme', 'light');
+    script.setAttribute('data-position', 'bottom-right');
+    script.setAttribute('data-greeting', "Hello! I'm your AI assistant. How can I help you today?");
+    script.async = true;
+    // Append to document head or body
+    document.head.appendChild(script);
+    // Cleanup function to remove script when component unmounts
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+      // Also clean up the widget if it has a cleanup method
+      const widgetRoot = document.getElementById('ai-widget-root');
+      if (widgetRoot) {
+        widgetRoot.remove();
+      }
+    };
+  }, []);
   
   return (
     <Router>

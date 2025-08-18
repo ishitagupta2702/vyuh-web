@@ -273,8 +273,8 @@ export default function CreateCrewTab() {
                     disabled={selectedAgents.some(a => a.id === agent.id)}
                   >
                     {selectedAgents.some(a => a.id === agent.id) ? 
-                      <><CheckIcon className="h-5 w-5" /> Added</> : 
-                      <><PlusCircleIcon className="h-5 w-5" /> Add to Crew</>
+                      <><CheckIcon scale={0.5} /> Added</> : 
+                      <><PlusCircleIcon /> Add to Crew</>
                     }
                   </button>
                 </div>
