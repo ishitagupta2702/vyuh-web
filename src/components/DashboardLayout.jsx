@@ -21,6 +21,11 @@ export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(location.pathname);
 
+  // Update active tab when location changes
+  useEffect(() => {
+    setActiveTab(location.pathname);
+  }, [location.pathname]);
+
   // Add dashboard-active class to body for full-screen styling
   useEffect(() => {
     document.body.classList.add('dashboard-active');

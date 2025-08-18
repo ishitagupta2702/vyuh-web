@@ -29,7 +29,18 @@ const CrewBuilder = () => {
       }
       
       const data = await response.json();
-      setAgents(data);
+      // Transform the object format to array format for the UI
+      const agentsArray = Object.entries(data).map(([id, agent]) => ({
+        id,
+        name: id.charAt(0).toUpperCase() + id.slice(1), // Capitalize first letter
+        role: agent.role,
+        goal: agent.goal,
+        backstory: agent.backstory,
+        category: agent.category || 'general', // Use category if provided, fallback to general
+        description: agent.role,
+        skills: agent.skills || [agent.goal] // Use skills if provided, fallback to goal
+      }));
+      setAgents(agentsArray);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch agents');

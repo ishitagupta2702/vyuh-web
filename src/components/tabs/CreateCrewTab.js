@@ -1,152 +1,368 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+    PlusCircleIcon,
+    MagnifyingGlassIcon,
+    PencilSquareIcon,
+    ChartBarIcon,
+    CodeBracketIcon,
+    UsersIcon,
+    CheckIcon,
+    XMarkIcon,
+    DocumentArrowDownIcon,
+    RocketLaunchIcon
+} from '@heroicons/react/24/outline';
 import './CreateCrewTab.css';
 
 export default function CreateCrewTab() {
-    const [projectIdea, setProjectIdea] = useState('');
-    const [activeFilter, setActiveFilter] = useState('all');
-    const [selectedAgents, setSelectedAgents] = useState([]);
+  console.log('CreateCrewTab component mounted');
+  
+  const [projectIdea, setProjectIdea] = useState('');
+  const [availableAgents, setAvailableAgents] = useState([]);
+  const [selectedAgents, setSelectedAgents] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [availableCategories, setAvailableCategories] = useState([]);
+  
+  // Launch crew state variables
+  const [launchLoading, setLaunchLoading] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const [launchResult, setLaunchResult] = useState(null);
+  const [result, setResult] = useState(null);
 
-    // Handler for project idea input changes
-    const handleIdeaChange = (e) => {
-        setProjectIdea(e.target.value);
-    };
+  // Get backend URL from environment or use default
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://vyuh-backend-production.up.railway.app';
 
-    // Handler for filter changes
-    const handleFilterChange = (filter) => {
-        setActiveFilter(filter);
-    };
-
-    // Handler for adding an agent to the crew
-    const handleAddAgent = (agentId) => {
-        if (!selectedAgents.includes(agentId)) {
-            setSelectedAgents([...selectedAgents, agentId]);
+  useEffect(() => {
+    const fetchAgents = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${BACKEND_URL}/api/agents`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const data = await response.json();
+        console.log('Raw API response:', data);
+        
+        // Transform the object format to array format for the UI
+        const agentsArray = Object.entries(data).map(([id, agent]) => ({
+          id,
+          name: id.charAt(0).toUpperCase() + id.slice(1), // Capitalize first letter
+          role: agent.role,
+          goal: agent.goal,
+          backstory: agent.backstory,
+          category: agent.category || 'general', // Use category if provided, fallback to general
+          description: agent.role,
+          skills: agent.skills || [agent.goal] // Use skills if provided, fallback to goal
+        }));
+        
+        console.log('Transformed agents:', agentsArray);
+        setAvailableAgents(agentsArray);
+        
+        // Extract unique categories from the agents
+        const categories = [...new Set(agentsArray.map(agent => agent.category))];
+        console.log('Available categories:', categories);
+        setAvailableCategories(categories);
+        
+        setError(null);
+      } catch (error) {
+        console.error('Failed to fetch agents:', error);
+        setError('Failed to load agents. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Handler for removing an agent from the crew
-    const handleRemoveAgent = (agentId) => {
-        setSelectedAgents(selectedAgents.filter(id => id !== agentId));
-    };
+    fetchAgents();
+  }, []);
 
-    return (
-        <div className="create-crew-container">
-            {/* Project Idea Section */}
-            <div className="project-idea-section">
-                <h3>What's Your Project Idea?</h3>
-                <textarea
-                    className="project-idea-input"
-                    value={projectIdea}
-                    onChange={handleIdeaChange}
-                    placeholder="Describe your project idea, goals, or what you want to accomplish..."
-                    rows={4}
-                />
-            </div>
+  const handleAddAgent = (agent) => {
+    if (!selectedAgents.some(a => a.id === agent.id)) {
+      setSelectedAgents([...selectedAgents, agent]);
+    }
+  };
 
-            {/* Filter Section */}
-            <div className="filter-section">
-                <h4>Filter Agents by Role</h4>
-                <div className="filter-buttons">
-                    <button
-                        className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
-                        onClick={() => handleFilterChange('all')}
-                    >
-                        All Roles
-                    </button>
-                    <button
-                        className={`filter-btn ${activeFilter === 'researcher' ? 'active' : ''}`}
-                        onClick={() => handleFilterChange('researcher')}
-                    >
-                        Researchers
-                    </button>
-                    <button
-                        className={`filter-btn ${activeFilter === 'writer' ? 'active' : ''}`}
-                        onClick={() => handleFilterChange('writer')}
-                    >
-                        Writers
-                    </button>
-                    <button
-                        className={`filter-btn ${activeFilter === 'analyst' ? 'active' : ''}`}
-                        onClick={() => handleFilterChange('analyst')}
-                    >
-                        Analysts
-                    </button>
-                    <button
-                        className={`filter-btn ${activeFilter === 'creative' ? 'active' : ''}`}
-                        onClick={() => handleFilterChange('creative')}
-                    >
-                        Creative
-                    </button>
-                </div>
-            </div>
+  const handleRemoveAgent = (agentId) => {
+    setSelectedAgents(selectedAgents.filter(agent => agent.id !== agentId));
+  };
 
-            {/* Agent Selection Section */}
-            <div className="agent-selection-section">
-                <h4>Available Agents</h4>
-                <div className="agents-grid">
-                    {/* This would be populated with actual agent data */}
-                    <div className="agent-card" onClick={() => handleAddAgent('researcher-1')}>
-                        <h5>Research Specialist</h5>
-                        <p>Expert at gathering and analyzing information</p>
-                        <span className="agent-role">Researcher</span>
-                    </div>
-                    <div className="agent-card" onClick={() => handleAddAgent('writer-1')}>
-                        <h5>Content Writer</h5>
-                        <p>Creates compelling written content</p>
-                        <span className="agent-role">Writer</span>
-                    </div>
-                    <div className="agent-card" onClick={() => handleAddAgent('analyst-1')}>
-                        <h5>Data Analyst</h5>
-                        <p>Interprets data and provides insights</p>
-                        <span className="agent-role">Analyst</span>
-                    </div>
-                    <div className="agent-card" onClick={() => handleAddAgent('creative-1')}>
-                        <h5>Creative Director</h5>
-                        <p>Generates innovative ideas and concepts</p>
-                        <span className="agent-role">Creative</span>
-                    </div>
-                </div>
-            </div>
+  const getAgentIcon = (category) => {
+    // Generate a consistent icon based on the category string
+    if (!category) return <UsersIcon className="h-6 w-6" />;
+    
+    const icons = [
+      <MagnifyingGlassIcon className="h-6 w-6" />, // research
+      <PencilSquareIcon className="h-6 w-6" />,   // content
+      <ChartBarIcon className="h-6 w-6" />,       // analysis
+      <CodeBracketIcon className="h-6 w-6" />,    // development
+      <UsersIcon className="h-6 w-6" />           // general
+    ];
+    
+    // Use the category string to generate a consistent index
+    let hash = 0;
+    for (let i = 0; i < category.length; i++) {
+      hash = ((hash << 5) - hash + category.charCodeAt(i)) & 0xffffffff;
+    }
+    return icons[Math.abs(hash) % icons.length];
+  };
 
-            {/* Selected Crew Section */}
-            <div className="selected-crew-section">
-                <h4>Your Selected Crew ({selectedAgents.length})</h4>
-                {selectedAgents.length === 0 ? (
-                    <p className="no-agents-message">No agents selected yet. Click on agents above to add them to your crew.</p>
-                ) : (
-                    <div className="selected-agents-list">
-                        {selectedAgents.map((agentId) => (
-                            <div key={agentId} className="selected-agent-item">
-                                <span className="agent-name">{agentId}</span>
-                                <button
-                                    className="remove-agent-btn"
-                                    onClick={() => handleRemoveAgent(agentId)}
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
 
-            {/* Action Buttons */}
-            <div className="action-buttons">
+
+  const getCategoryColor = (category) => {
+    // Generate a consistent color based on the category string
+    if (!category) return 'bg-gray-600';
+    
+    const colors = [
+      'bg-blue-600', 'bg-green-600', 'bg-orange-600', 'bg-purple-600',
+      'bg-red-600', 'bg-indigo-600', 'bg-pink-600', 'bg-yellow-600',
+      'bg-teal-600', 'bg-cyan-600'
+    ];
+    
+    // Use the category string to generate a consistent index
+    let hash = 0;
+    for (let i = 0; i < category.length; i++) {
+      hash = ((hash << 5) - hash + category.charCodeAt(i)) & 0xffffffff;
+    }
+    return colors[Math.abs(hash) % colors.length];
+  };
+
+  const filteredAgents = activeFilter === 'all'
+    ? availableAgents
+    : availableAgents.filter(agent => agent.category?.toLowerCase() === activeFilter);
+    
+  console.log('Filtered agents:', filteredAgents, 'Active filter:', activeFilter);
+  console.log('Available agents count:', availableAgents.length);
+  console.log('Loading state:', loading);
+  console.log('Error state:', error);
+
+  const isLaunchDisabled = selectedAgents.length === 0 || projectIdea.trim() === '';
+
+  const handleLaunchCrew = async () => {
+    if (selectedAgents.length === 0) {
+      alert('Please select at least one agent');
+      return;
+    }
+    
+    if (!projectIdea.trim()) {
+      alert('Please enter a project idea');
+      return;
+    }
+
+    try {
+      setLaunchLoading(true);
+      const payload = {
+        crew: selectedAgents.map(agent => agent.id),
+        topic: projectIdea.trim()
+      };
+      
+      const response = await fetch(`${BACKEND_URL}/api/launch`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setSessionId(data.session_id);
+      setLaunchResult(data); // Store the complete launch response
+      setResult(data.data); // Use the data field from the response
+    } catch (err) {
+      alert(`Error launching crew: ${err instanceof Error ? err.message : 'Failed to launch crew'}`);
+    } finally {
+      setLaunchLoading(false);
+    }
+  };
+
+  const handleReset = () => {
+    setSelectedAgents([]);
+    setProjectIdea('');
+    setSessionId(null);
+    setResult(null);
+    setLaunchResult(null);
+  };
+
+  return (
+    <div className="create-crew-container">
+      <header className="crew-builder-header">
+        <h2>Create Your AI Crew</h2>
+        <p>Build a custom team of AI agents tailored to your specific needs</p>
+        {/* Debug: Component rendered, agents count: {availableAgents.length} */}
+      </header>
+
+      <div className="crew-builder-content">
+        <section className="idea-section">
+          <h3>Describe Your Project</h3>
+          <div className="input-group">
+            <label htmlFor="project-idea">What do you want your AI crew to accomplish?</label>
+            <textarea 
+              id="project-idea" 
+              className="idea-textarea" 
+              rows="5" 
+              placeholder="Describe your project, goals, and requirements in detail..."
+              value={projectIdea}
+              onChange={(e) => setProjectIdea(e.target.value)}
+            ></textarea>
+          </div>
+        </section>
+
+        <section className="agent-selection-section">
+          <div className="section-header">
+            <h3>Available Agents</h3>
+            <div className="agent-filters">
+              <button 
+                className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
+                onClick={() => setActiveFilter('all')}
+              >All</button>
+              {availableCategories.map(category => (
                 <button 
-                    className="create-crew-btn"
-                    disabled={selectedAgents.length === 0 || !projectIdea.trim()}
+                  key={category}
+                  className={`filter-btn ${activeFilter === category ? 'active' : ''}`}
+                  onClick={() => setActiveFilter(category)}
                 >
-                    Create Crew
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
                 </button>
-                <button 
-                    className="clear-all-btn"
-                    onClick={() => {
-                        setSelectedAgents([]);
-                        setProjectIdea('');
-                    }}
-                >
-                    Clear All
-                </button>
+              ))}
             </div>
+          </div>
+          
+          {loading && (
+            <div className="loading-state">
+              <p>Loading agents...</p>
+            </div>
+          )}
+          
+          {error && (
+            <div className="error-state">
+              <p>{error}</p>
+            </div>
+          )}
+          
+          {!loading && !error && (
+            <div className="agents-grid">
+              {filteredAgents.map(agent => (
+                <div className="agent-card" key={agent.id} data-category={agent.category}>
+                  <div className="agent-header">
+                    <div className="agent-avatar">
+                      {getAgentIcon(agent.category)}
+                    </div>
+                    <div className="agent-info">
+                      <h4>{agent.name}</h4>
+                      <span className={`agent-tag ${getCategoryColor(agent.category)}`}>
+                        {agent.category?.toUpperCase() || 'GENERAL'}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="agent-description">{agent.description || agent.role || 'AI agent specialized in various tasks.'}</p>
+                  <div className="agent-skills">
+                    {agent.skills && agent.skills.map(skill => (
+                      <span className="skill-tag" key={skill}>{skill}</span>
+                    ))}
+                    {!agent.skills && agent.goal && (
+                      <span className="skill-tag">{agent.goal}</span>
+                    )}
+                  </div>
+                  <button 
+                    className="add-agent-btn"
+                    onClick={() => handleAddAgent(agent)}
+                    disabled={selectedAgents.some(a => a.id === agent.id)}
+                  >
+                    {selectedAgents.some(a => a.id === agent.id) ? 
+                      <><CheckIcon scale={0.5} /> Added</> : 
+                      <><PlusCircleIcon /> Add to Crew</>
+                    }
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className="selected-crew-section">
+          <h3>Your Crew</h3>
+          <div className="selected-crew-container">
+            <div id="selected-crew-members" className="crew-members">
+              {selectedAgents.length === 0 ? (
+                <div className="empty-crew">
+                  <UsersIcon className="h-8 w-8" />
+                  <p>No agents selected yet</p>
+                  <span>Add agents from the list above to build your crew</span>
+                </div>
+              ) : (
+                selectedAgents.map(agent => (
+                  <div className="crew-member" key={agent.id}>
+                    <div className="member-info">
+                      <div className="member-avatar">
+                        {getAgentIcon(agent.category)}
+                      </div>
+                      <span className="member-name">{agent.name}</span>
+                    </div>
+                    <button 
+                      className="remove-member"
+                      onClick={() => handleRemoveAgent(agent.id)}
+                    >
+                      <XMarkIcon className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+            <div className="crew-actions">
+              <button className="save-crew-btn" disabled={selectedAgents.length === 0}>
+                <DocumentArrowDownIcon className="h-5 w-5" /> Save Crew
+              </button>
+              <button className="launch-crew-btn" disabled={isLaunchDisabled} onClick={handleLaunchCrew}>
+                {launchLoading ? 'Launching...' : <><RocketLaunchIcon className="h-5 w-5" /> Launch Crew</>}
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Result Display Section */}
+      {(launchResult || result) && (
+        <div className="result-section">
+          <div className="result-header">
+            <h3>Crew Execution Result</h3>
+            {sessionId && <span className="session-id">Session: {sessionId}</span>}
+            {launchResult && (
+              <div className="result-info">
+                <span className="topic-info">Topic: {launchResult.topic}</span>
+                <span className="crew-info">Crew: {launchResult.crew?.join(', ')}</span>
+              </div>
+            )}
+          </div>
+          
+          {launchLoading && !result && (
+            <div className="result-loading">
+              <div className="loading-spinner"></div>
+              <p>Executing crew... This may take a few moments.</p>
+            </div>
+          )}
+          
+          {result && (
+            <div className="result-content">
+              <textarea
+                className="result-textarea"
+                value={result}
+                readOnly
+                rows={15}
+                placeholder="Crew execution result will appear here..."
+              />
+              <div className="result-actions">
+                <button onClick={handleReset} className="reset-btn">
+                  Start Over
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-    );
+      )}
+    </div>
+  );
 }
